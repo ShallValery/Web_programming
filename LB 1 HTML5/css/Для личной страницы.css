@@ -1,0 +1,48 @@
+
+header {
+  margin: 10px 0 40px 0;
+  text-align: center;
+  color: black;
+}
+body {
+  padding: 0;
+  margin: 0;
+  background-image: url(../img/Фон1.jpg);
+  background-size: cover;
+  color: yellow;
+  background-repeat: no-repeat;
+  font-family: times, serif;
+}
+
+
+.a {
+	margin: 10px 0 40px 0;
+	text-align: center;
+	font-size: 33px;
+}
+.b {
+	color:indigo;
+	font-size:27px;
+	text-align:center
+}
+.c {
+	margin-top: 150px;
+	color:blue;
+	font-size:27px;
+	text-align:center;
+}
+.d {
+	margin-top: 150px;
+	margin-bottom: 50px;
+	color: yellow;
+	font-size:27px;
+	text-align:center;
+}
+
+
+footer {
+    margin-top: 50;
+    text-align: left;
+    font-size: 20px;
+    color: orange;
+}
