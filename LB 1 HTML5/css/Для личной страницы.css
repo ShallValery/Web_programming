@@ -4,6 +4,7 @@ header {
   text-align: center;
   color: black;
 }
+
 body {
   padding: 0;
   margin: 0;
@@ -14,12 +15,11 @@ body {
   font-family: times, serif;
 }
 
-
-.a {
-	margin: 10px 0 40px 0;
-	text-align: center;
-	font-size: 33px;
+table {
+    margin: 0 auto; 
 }
+
+
 .b {
 	color:indigo;
 	font-size:27px;
