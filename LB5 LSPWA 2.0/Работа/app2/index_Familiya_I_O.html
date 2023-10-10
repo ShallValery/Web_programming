@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Приложение 2</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        .button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: .5s ease;
+        }
+        .button:hover {
+            cursor: pointer;
+            transform: translate(100px, 100px);
+        }
+        .button.stop:hover {
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button class="button" :class="{ stop: isStop }" @mouseover="moveButton" @click="isFormVisible = !isFormVisible">Переключить режим</button>
+        <button @click="isStop = !isStop">Отключить режим бегства</button>
+
+        <div v-if="isFormVisible">
+            <input type="text" v-model="login" placeholder="Login">
+            <input type="text" v-model="firstName" placeholder="First Name">
+            <input type="text" v-model="lastName" placeholder="Last Name">
+            <input type="number" v-model="age" placeholder="Age">
+            <input type="email" v-model="email" placeholder="E-mail">
+
+            <select v-if="isAllFieldsFilled" v-model="selectedOption">
+                <option disabled value="">Выберите опцию</option>
+                <option>Скрыть</option>
+                <option>Отобразить</option>
+            </select>
+
+            <table v-if="selectedOption === 'Отобразить'">
+                <tr><td>Login:</td><td>{{ login }}</td></tr>
+                <tr><td>First Name:</td><td>{{ firstName }}</td></tr>
+                <tr><td>Last Name:</td><td>{{ lastName }}</td></tr>
+                <tr><td>Age:</td><td>{{ age }}</td></tr>
+                <tr><td>E-mail:</td><td>{{ email }}</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isStop: false,
+                isFormVisible: false,
+                login: '',
+                firstName: '',
+                lastName: '',
+                age: null,
+                email: '',
+                selectedOption: ''
+            },
+            methods: {
+                moveButton(event) {
+                    if (!this.isStop) {
+                        event.target.style.transform = `translate(${Math.random() * 200}px, ${Math.random() * 200}px)`;
+                    }
+                }
+            },
+            computed: {
+                isAllFieldsFilled() {
+                    return this.login && this.firstName && this.lastName && this.age && this.email;
+                }
+            },
+            watch: {
+                selectedOption(value) {
+                    if (value === 'Скрыть') {
+                        this.isFormVisible = false;
+                    } else if (value === 'Отобразить') {
+                        this.isFormVisible = true;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

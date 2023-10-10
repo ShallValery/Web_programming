@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Приложение 1</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        #app {
+            position: relative;
+            width: 420px;
+            height: 576px;
+            border: 1px solid black;
+        }
+        .text {
+            position: absolute;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="text" :style="{ left: `${x}px`, top: `${y}px` }">{{ message }}</div>
+</div>
+
+<script>
+new Vue({
+    el: '#app',
+    data: {
+        x: Math.random() * (420 - 50 - 5) + 5,
+        y: Math.random() * (576 - 50 - 5) + 5,
+        message: 'Hello Vue.js!',
+        spacePressed: false,
+        enterPressed: false
+    },
+    mounted() {
+        window.addEventListener('keydown', this.handleKeydown);
+        window.addEventListener('keyup', this.handleKeyup);
+    },
+    beforeDestroy() {
+        window.removeEventListener('keydown', this.handleKeydown);
+        window.removeEventListener('keyup', this.handleKeyup);
+    },
+    methods: {
+        handleKeydown(event) {
+            const step = 5;
+            if (event.code === 'Space') this.spacePressed = true;
+            if (event.code === 'Enter') this.enterPressed = true;
+
+            switch (event.key) {
+                case 'ArrowUp':
+                    if (this.spacePressed) this.y = Math.max(this.y - step, 5);
+                    else if (event.shiftKey) this.y = Math.min(this.y + step, 576 - 50 - 5);
+                    break;
+                case 'ArrowDown':
+                    if (this.spacePressed) this.y = Math.min(this.y + step, 576 - 50 - 5);
+                    else if (event.shiftKey) this.y = Math.max(this.y - step, 5);
+                    break;
+                case 'ArrowLeft':
+                    if (this.enterPressed) this.x = Math.max(this.x - step, 5);
+                    else if (event.shiftKey) this.x = Math.min(this.x + step, 420 - 50 - 5);
+                    break;
+                case 'ArrowRight':
+                    if (this.enterPressed) this.x = Math.min(this.x + step, 420 - 50 - 5);
+                    else if (event.shiftKey) this.x = Math.max(this.x - step, 5);
+                    break;
+            }
+        },
+        handleKeyup(event) {
+            if (event.code === 'Space') this.spacePressed = false;
+            if (event.code === 'Enter') this.enterPressed = false;
+        }
+    }
+});
+</script>
+
+</body>
+</html>
