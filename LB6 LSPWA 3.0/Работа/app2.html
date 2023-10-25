@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>app2_watch</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        #app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        svg {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <label>Ширина: <input v-model.number="width" type="number" min="0"></label><br>
+            <label>Высота: <input v-model.number="height" type="number" min="0"></label><br>
+            <svg :width="width" :height="height">
+                <image :href="'160559.svg'" :width="width" :height="height"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                width: 160,
+                height: 90
+            },
+            watch: {
+                width(val) {
+                    this.height = val * (9 / 16);
+                },
+                height(val) {
+                    this.width = val * (16 / 9);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

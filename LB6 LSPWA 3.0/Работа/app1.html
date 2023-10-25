@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>app1_v-for</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        table {
+            width: 100%;
+            table-layout: fixed;
+        }
+        th, td {
+            width: 20%;
+        }
+        input {
+            width: 24.35%;
+            margin-right: 0%;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <table border="1">
+            <tr>
+                <th>Наименование</th>
+                <th>Производитель</th>
+                <th>Количество</th>
+                <th>Цена</th>
+            </tr>
+            <tr v-for="item in items">
+                <td>{{ item.name }}</td>
+                <td>{{ item.manufacturer }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+            </tr>
+        </table>
+
+        <input v-model="newItem.name" @keyup.enter="addItem" placeholder="Наименование">
+        <input v-model="newItem.manufacturer" @keyup.enter="addItem" placeholder="Производитель">
+        <input v-model="newItem.quantity" @keyup.enter="addItem" placeholder="Количество">
+        <input v-model="newItem.price" @keyup.enter="addItem" placeholder="Цена">
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                newItem: {name: '', manufacturer: '', quantity: '', price: ''},
+                items: []
+            },
+            methods: {
+                addItem() {
+                    this.newItem.name = this.newItem.name || '-----';
+                    this.newItem.manufacturer = this.newItem.manufacturer || '-----';
+                    this.newItem.quantity = this.newItem.quantity || '0';
+                    this.newItem.price = this.newItem.price || '0';
+                    this.items.push({...this.newItem});
+                    this.newItem = {name: '', manufacturer: '', quantity: '', price: ''};
+                }
+            }
+        });
+    </script>
+</body>
+</html>
