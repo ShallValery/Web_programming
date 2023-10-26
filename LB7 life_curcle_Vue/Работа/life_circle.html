@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+        #log {
+            border: 2px solid #000;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .log-message {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        {{ message }}
+        <button v-on:click="changeMessage">Нажми меня</button>
+        <button id="unmount-button">Размонтировать</button>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        const App = {
+            data() {
+                return {
+                    message: 'Мы рождаемся!',
+                    messages: ['Взрослеем!', 'Стареем!', 'Умираем!'],
+                    index: 0,
+                    logs: []
+                }
+            },
+            methods: {
+                changeMessage() {
+                    this.index = (this.index + 1) % this.messages.length;
+                    this.message = this.messages[this.index];
+                },
+                log(message) {
+                    console.log(message);
+                    const logDiv = document.getElementById('log');
+                    if (logDiv) {
+                        const newLogMessage = document.createElement('div');
+                        newLogMessage.textContent = message;
+                        newLogMessage.className = 'log-message';
+                        logDiv.appendChild(newLogMessage);
+                    }
+                }
+            },
+            mounted() {
+                this.log('created');
+                this.log('beforeMount');
+                this.log('mounted');
+            },
+            beforeUpdate() {
+                this.log('beforeUpdate');
+            },
+            updated() {
+                this.log('updated');
+            },
+            beforeUnmount() {
+                this.log('beforeUnmount');
+            },
+            unmounted() {
+                this.log('unmounted');
+            }
+        }
+
+        const appInstance = Vue.createApp(App);
+        const mountedApp = appInstance.mount('#app');
+
+        document.getElementById('unmount-button').addEventListener('click', function() {
+            appInstance.unmount();
+        });
+    </script>
+</body>
+</html>
